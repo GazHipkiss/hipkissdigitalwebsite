@@ -1,5 +1,31 @@
-# Cloudflare Pages – static export (Next.js output: 'export')
-# Build command: npm run build  →  output folder: out
+# OpenNext Cloudflare – Hipkiss Digital
+# Build: opennextjs-cloudflare build  (output: .open-next)
+# Deploy: opennextjs-cloudflare deploy  or  upload for Pages
 
 name = "hipkissdigitalwebsite"
-pages_build_output_dir = "out"
+main = ".open-next/worker.js"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "hipkissdigitalwebsite"
+
+# D1 – create with: npx wrangler d1 create hipkiss-digital-db
+# Then set database_id below and run: npx wrangler d1 execute hipkiss-digital-db --remote --file=./lib/db/schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "hipkiss-digital-db"
+database_id = "6af4ba18-bfbe-4490-ac1c-f7206218931f"
+
+# R2 – create in dashboard or: npx wrangler r2 bucket create hipkiss-uploads
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "hipkiss-uploads"
+
+# Env/secrets: set via Cloudflare dashboard or wrangler secret put
+# RESEND_API_KEY, CONTACT_EMAIL, ADMIN_PASSWORD

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "./components/Button";
 import { Reveal } from "./components/Reveal";
 import { HeroReveal } from "./components/HeroReveal";
+import { Testimonials } from "./components/Testimonials";
 
 export default function Home() {
   return (
@@ -78,6 +79,8 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      <Testimonials />
 
       <section className="section" aria-labelledby="cta-heading">
         <Reveal className="container-narrow">
