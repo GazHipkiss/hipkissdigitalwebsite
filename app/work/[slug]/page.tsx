@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import { Button } from "../../components/Button";
 import { Reveal } from "../../components/Reveal";
 
-export const runtime = "edge";
-
 const CASE_STUDIES: Record<
   string,
   { title: string; tagline: string; description: string; tags: string[]; detail: string }
@@ -38,6 +36,12 @@ const CASE_STUDIES: Record<
       "A full replacement of an outdated marketing site. Goals were clarity, performance, and a clear path from visitor to enquiry. The site is fully responsive, accessible, and backed by a simple CMS so the team can update content without developer involvement.",
   },
 };
+
+const SLUGS = ["placeholder-ecommerce", "placeholder-saas", "placeholder-marketing"] as const;
+
+export function generateStaticParams() {
+  return SLUGS.map((slug) => ({ slug }));
+}
 
 type Props = { params: Promise<{ slug: string }> };
 

@@ -1,8 +1,5 @@
-# Cloudflare Pages – next-on-pages build output + compatibility flags
-# Required: pages_build_output_dir so Cloudflare accepts this file and applies flags.
-# See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+# Cloudflare Pages – static export (Next.js output: 'export')
+# Build command: npm run build  →  output folder: out
 
 name = "hipkissdigitalwebsite"
-pages_build_output_dir = ".vercel/output"
-compatibility_date = "2024-09-23"
-compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "out"
