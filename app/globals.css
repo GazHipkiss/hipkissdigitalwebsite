@@ -110,9 +110,9 @@
   --color-brand-secondary: var(--brand-accent);
   --color-surface-raised: var(--surface-panel);
 
-  /* Fonts */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts — Inter (loaded via link in layout) + system fallbacks for edge */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 
   /* Radius */
   --radius-card: var(--radius-2xl);
