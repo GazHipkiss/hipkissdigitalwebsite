@@ -25,8 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ backgroundColor: "#A8D3F0" }}>
       <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `html,body{background:#A8D3F0!important;color:#1C2E5A!important;min-height:100%;font-family:'Inter',system-ui,sans-serif;}`,
+          }}
+        />
         <link
           rel="preconnect"
           href="https://fonts.googleapis.com"
@@ -41,14 +46,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body
-        className="antialiased"
-        style={{
-          fontFamily: "'Inter', system-ui, sans-serif",
-          backgroundColor: "#A8D3F0",
-          color: "#1C2E5A",
-        }}
-      >
+      <body className="antialiased">
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
