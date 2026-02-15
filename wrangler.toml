@@ -1,7 +1,8 @@
-# Cloudflare Pages – compatibility flags for Next.js (next-on-pages)
-# Required so the app can use Node.js APIs at runtime.
+# Cloudflare Pages – next-on-pages build output + compatibility flags
+# Required: pages_build_output_dir so Cloudflare accepts this file and applies flags.
 # See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
 
 name = "hipkissdigitalwebsite"
-compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output"
 compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
