@@ -1,0 +1,7 @@
+# Cloudflare Pages – compatibility flags for Next.js (next-on-pages)
+# Required so the app can use Node.js APIs at runtime.
+# See: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+
+name = "hipkissdigitalwebsite"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2024-09-23"
