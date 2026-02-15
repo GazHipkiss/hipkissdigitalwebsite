@@ -19,8 +19,8 @@ const STRENGTHS = [
 export default function AboutPage() {
   return (
     <>
-      <section className="px-6 pt-16 pb-12 lg:px-8 lg:pt-24 lg:pb-16">
-        <div className="mx-auto max-w-4xl">
+      <section className="section">
+        <div className="container-narrow">
           <Reveal className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
             <div className="flex-shrink-0">
               <Image
@@ -31,11 +31,11 @@ export default function AboutPage() {
                 className="h-14 w-auto object-contain"
               />
             </div>
-            <div>
-              <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
+            <div className="max-w-4xl">
+              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
                 About Hipkiss Digital
               </h1>
-              <p className="mt-6 text-lg text-[var(--muted)]">
+              <p className="mt-6 text-lg text-muted">
                 Hipkiss Digital is a solo developer studio. I build websites and applications for businesses that want high-quality work, clear communication, and a single point of contact — without the cost and complexity of a large agency.
               </p>
             </div>
@@ -44,15 +44,15 @@ export default function AboutPage() {
       </section>
 
       <section
-        className="border-t border-[var(--border)] bg-[var(--card-bg)] px-6 py-16 lg:px-8 lg:py-20"
+        className="panel section border-t border-border"
         aria-labelledby="solo-advantages"
       >
-        <div className="mx-auto max-w-3xl">
+        <div className="container-narrow max-w-3xl">
           <Reveal>
-            <h2 id="solo-advantages" className="text-2xl font-semibold text-[var(--foreground)]">
+            <h2 id="solo-advantages" className="text-2xl font-semibold text-foreground">
               Why solo is a strength
             </h2>
-            <p className="mt-4 text-[var(--muted)]">
+            <p className="mt-4 text-muted">
               Being a one-person studio isn’t a limitation — it’s what lets me offer the kind of attention and consistency that bigger teams often can’t.
             </p>
           </Reveal>
@@ -61,12 +61,12 @@ export default function AboutPage() {
               <Reveal key={item}>
                 <li className="flex gap-4">
                   <span
-                    className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-[var(--brand-light)] text-sm font-semibold text-[var(--brand-mid)]"
+                    className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-brand-accent-subtle text-sm font-semibold text-brand-mid"
                     aria-hidden
                   >
                     ✓
                   </span>
-                  <span className="text-[var(--foreground)]">{item}</span>
+                  <span className="text-foreground">{item}</span>
                 </li>
               </Reveal>
             ))}
@@ -74,32 +74,31 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section
-        className="border-t border-[var(--border)] px-6 py-16 lg:px-8 lg:py-20"
-        aria-labelledby="approach"
-      >
-        <div className="mx-auto max-w-3xl">
+      <section className="section border-t border-border">
+        <div className="container-narrow max-w-3xl">
           <Reveal>
-            <h2 id="approach" className="text-2xl font-semibold text-[var(--foreground)]">
+            <h2 id="approach" className="text-2xl font-semibold text-foreground">
               How I work
             </h2>
-            <p className="mt-4 text-[var(--muted)]">
+            <p className="mt-4 text-muted">
               I focus on a small number of projects at a time. That means clear timelines, fewer surprises, and code that’s built to last. I use modern, well-supported tools and write documentation so you or another developer can take over if needed. No lock-in, no black boxes.
             </p>
           </Reveal>
         </div>
       </section>
 
-      <section className="border-t border-[var(--border)] bg-[var(--card-bg)] px-6 py-16 lg:px-8 lg:py-20">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold text-[var(--foreground)]">
-            Let’s talk about your project
-          </h2>
-          <p className="mt-4 text-[var(--muted)]">
-            Tell me what you’re trying to achieve and I’ll outline how I can help.
-          </p>
-          <div className="mt-8">
-            <Button href="/contact">Get in touch</Button>
+      <section className="panel section border-t border-border">
+        <Reveal className="container-narrow">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-semibold text-foreground">
+              Let’s talk about your project
+            </h2>
+            <p className="mt-4 text-muted">
+              Tell me what you’re trying to achieve and I’ll outline how I can help.
+            </p>
+            <div className="mt-8">
+              <Button href="/contact">Get in touch</Button>
+            </div>
           </div>
         </Reveal>
       </section>

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Button } from "../../components/Button";
 import { Reveal } from "../../components/Reveal";
 
+export const runtime = "edge";
+
 const CASE_STUDIES: Record<
   string,
   { title: string; tagline: string; description: string; tags: string[]; detail: string }
@@ -56,26 +58,26 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <>
-      <section className="px-6 pt-16 pb-12 lg:px-8 lg:pt-24 lg:pb-16">
-        <div className="mx-auto max-w-3xl">
+      <section className="section">
+        <div className="container-narrow max-w-3xl">
           <Reveal>
             <Link
               href="/work"
-              className="text-sm font-medium text-[var(--brand-mid)] hover:underline"
+              className="text-sm font-medium text-brand-mid transition-colors duration-200 hover:text-brand-accent"
             >
               ← Back to Work
             </Link>
-            <p className="mt-4 text-sm font-medium text-[var(--brand-mid)]">
+            <p className="mt-4 text-sm font-medium text-brand-mid">
               {project.tagline}
             </p>
-            <h1 className="mt-2 text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
+            <h1 className="mt-2 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               {project.title}
             </h1>
             <ul className="mt-4 flex flex-wrap gap-2" aria-label="Technologies">
               {project.tags.map((tag) => (
                 <li
                   key={tag}
-                  className="rounded-full bg-[var(--brand-light)] px-3 py-1 text-xs font-medium text-[var(--brand-dark)]"
+                  className="rounded-full bg-brand-accent-subtle px-3 py-1 text-xs font-medium text-brand-deep"
                 >
                   {tag}
                 </li>
@@ -85,11 +87,9 @@ export default async function CaseStudyPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="border-t border-[var(--border)] px-6 py-16 lg:px-8 lg:py-20">
-        <Reveal className="mx-auto max-w-3xl">
-          <div className="prose prose-slate max-w-none">
-            <p className="text-lg text-[var(--muted)]">{project.detail}</p>
-          </div>
+      <section className="panel section border-t border-border">
+        <Reveal className="container-narrow max-w-3xl">
+          <p className="text-lg text-muted">{project.detail}</p>
           <div className="mt-10">
             <Button href="/contact">Discuss a similar project</Button>
           </div>

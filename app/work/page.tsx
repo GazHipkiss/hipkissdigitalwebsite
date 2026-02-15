@@ -39,49 +39,51 @@ const CASE_STUDIES = [
 export default function WorkPage() {
   return (
     <>
-      <section className="px-6 pt-16 pb-12 lg:px-8 lg:pt-24 lg:pb-16">
-        <div className="mx-auto max-w-3xl">
-          <Reveal>
-            <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
-              Work
-            </h1>
-            <p className="mt-6 text-lg text-[var(--muted)]">
-              A selection of recent projects. Each one was built with clear requirements, direct communication, and a focus on long-term maintainability.
-            </p>
-          </Reveal>
+      <section className="section">
+        <div className="container-narrow">
+          <div className="max-w-3xl">
+            <Reveal>
+              <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                Work
+              </h1>
+              <p className="mt-6 text-lg text-muted">
+                A selection of recent projects. Each one was built with clear requirements, direct communication, and a focus on long-term maintainability.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       <section
-        className="border-t border-[var(--border)] px-6 py-16 lg:px-8 lg:py-20"
+        className="panel section border-t border-border"
         aria-labelledby="case-studies"
       >
-        <div className="mx-auto max-w-4xl">
+        <div className="container-narrow">
           <h2 id="case-studies" className="sr-only">
             Case studies
           </h2>
-          <ul className="space-y-8">
+          <ul className="max-w-4xl space-y-8">
             {CASE_STUDIES.map((project) => (
               <Reveal key={project.slug}>
                 <li>
                   <Link
                     href={`/work/${project.slug}`}
-                    className="group block rounded-2xl border border-[var(--border)] bg-[var(--card-bg)] p-8 transition-all duration-200 hover:border-[var(--brand-mid)]/30 hover:shadow-md"
+                    className="group block rounded-card border border-border bg-background/50 p-8 transition-all duration-200 hover:border-brand-accent/30 hover:shadow-md"
                   >
-                    <span className="text-sm font-medium text-[var(--brand-mid)]">
+                    <span className="text-sm font-medium text-brand-mid">
                       {project.tagline}
                     </span>
-                    <h3 className="mt-2 text-xl font-semibold text-[var(--foreground)] group-hover:text-[var(--brand-mid)]">
+                    <h3 className="mt-2 text-xl font-semibold text-foreground transition-colors duration-200 group-hover:text-brand-accent">
                       {project.title}
                     </h3>
-                    <p className="mt-3 text-[var(--muted)]">
+                    <p className="mt-3 text-muted">
                       {project.description}
                     </p>
                     <ul className="mt-4 flex flex-wrap gap-2" aria-label="Technologies">
                       {project.tags.map((tag) => (
                         <li
                           key={tag}
-                          className="rounded-full bg-[var(--brand-light)] px-3 py-1 text-xs font-medium text-[var(--brand-dark)]"
+                          className="rounded-full bg-brand-accent-subtle px-3 py-1 text-xs font-medium text-brand-deep"
                         >
                           {tag}
                         </li>
@@ -95,16 +97,18 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="border-t border-[var(--border)] bg-[var(--card-bg)] px-6 py-16 lg:px-8 lg:py-20">
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold text-[var(--foreground)]">
-            Have a similar project in mind?
-          </h2>
-          <p className="mt-4 text-[var(--muted)]">
-            I take on a limited number of projects so each one gets proper attention.
-          </p>
-          <div className="mt-8">
-            <Button href="/contact">Start a conversation</Button>
+      <section className="section">
+        <Reveal className="container-narrow">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-semibold text-foreground">
+              Have a similar project in mind?
+            </h2>
+            <p className="mt-4 text-muted">
+              I take on a limited number of projects so each one gets proper attention.
+            </p>
+            <div className="mt-8">
+              <Button href="/contact">Start a conversation</Button>
+            </div>
           </div>
         </Reveal>
       </section>

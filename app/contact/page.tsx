@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="px-6 pt-16 pb-12 lg:px-8 lg:pt-24 lg:pb-16">
-        <div className="mx-auto max-w-2xl">
+      <section className="section">
+        <div className="container-narrow max-w-2xl">
           <Reveal>
-            <h1 className="text-4xl font-bold tracking-tight text-[var(--foreground)] sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
               Contact
             </h1>
-            <p className="mt-6 text-lg text-[var(--muted)]">
+            <p className="mt-6 text-lg text-muted">
               Have a project in mind? Describe what you need and I’ll get back to you within 24 hours. No obligation — just a straightforward conversation.
             </p>
           </Reveal>
@@ -24,12 +24,12 @@ export default function ContactPage() {
       </section>
 
       <section
-        className="border-t border-[var(--border)] px-6 py-16 lg:px-8 lg:py-20"
+        className="panel section border-t border-border"
         aria-labelledby="contact-form"
       >
-        <div className="mx-auto max-w-xl">
+        <div className="container-narrow max-w-xl">
           <Reveal>
-            <h2 id="contact-form" className="text-xl font-semibold text-[var(--foreground)]">
+            <h2 id="contact-form" className="text-xl font-semibold text-foreground">
               Send an enquiry
             </h2>
             <form
@@ -39,7 +39,7 @@ export default function ContactPage() {
               aria-label="Contact form"
             >
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-[var(--foreground)]">
+                <label htmlFor="name" className="block text-sm font-medium text-foreground">
                   Name
                 </label>
                 <input
@@ -48,12 +48,12 @@ export default function ContactPage() {
                   type="text"
                   required
                   autoComplete="name"
-                  className="mt-2 block w-full rounded-lg border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted-light)] focus:border-[var(--brand-mid)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-mid)]"
+                  className="mt-2 block w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground placeholder:text-muted-light focus:border-brand-mid focus:outline-none focus:ring-1 focus:ring-brand-mid transition-colors duration-200"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-[var(--foreground)]">
+                <label htmlFor="email" className="block text-sm font-medium text-foreground">
                   Email
                 </label>
                 <input
@@ -62,12 +62,12 @@ export default function ContactPage() {
                   type="email"
                   required
                   autoComplete="email"
-                  className="mt-2 block w-full rounded-lg border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted-light)] focus:border-[var(--brand-mid)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-mid)]"
+                  className="mt-2 block w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground placeholder:text-muted-light focus:border-brand-mid focus:outline-none focus:ring-1 focus:ring-brand-mid transition-colors duration-200"
                   placeholder="you@company.com"
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-[var(--foreground)]">
+                <label htmlFor="message" className="block text-sm font-medium text-foreground">
                   Message
                 </label>
                 <textarea
@@ -75,20 +75,20 @@ export default function ContactPage() {
                   name="message"
                   rows={5}
                   required
-                  className="mt-2 block w-full rounded-lg border border-[var(--border)] bg-[var(--card-bg)] px-4 py-3 text-[var(--foreground)] placeholder:text-[var(--muted-light)] focus:border-[var(--brand-mid)] focus:outline-none focus:ring-1 focus:ring-[var(--brand-mid)]"
+                  className="mt-2 block w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground placeholder:text-muted-light focus:border-brand-mid focus:outline-none focus:ring-1 focus:ring-brand-mid transition-colors duration-200"
                   placeholder="Tell me about your project, timeline, and budget if you have one in mind."
                 />
               </div>
               <div>
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[var(--brand-dark)] px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-[var(--brand-mid)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-mid)] focus:ring-offset-2"
+                  className="btn-primary w-full py-3"
                 >
                   Send message
                 </button>
               </div>
             </form>
-            <p className="mt-6 text-sm text-[var(--muted)]">
+            <p className="mt-6 text-sm text-muted">
               This form is a placeholder. Connect it to your preferred backend or service (e.g. Formspree, Resend, or your own API) to receive enquiries.
             </p>
           </Reveal>

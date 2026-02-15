@@ -13,14 +13,14 @@ export function Footer() {
 
   return (
     <footer
-      className="border-t border-[var(--border)] bg-[var(--card-bg)]"
+      className="panel border-t border-border"
       role="contentinfo"
     >
-      <div className="mx-auto max-w-6xl px-6 py-12 lg:px-8">
+      <div className="container-narrow py-12">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
           <Link
             href="/"
-            className="inline-flex items-center transition-opacity hover:opacity-90"
+            className="inline-flex items-center transition-opacity duration-200 hover:opacity-90"
             aria-label="Hipkiss Digital – Home"
           >
             <Image
@@ -37,7 +37,7 @@ export function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+                    className="text-sm text-muted transition-colors duration-200 hover:text-foreground"
                   >
                     {label}
                   </Link>
@@ -46,11 +46,11 @@ export function Footer() {
             </ul>
           </nav>
         </div>
-        <div className="mt-10 flex flex-col items-center gap-4 border-t border-[var(--border)] pt-10 md:flex-row md:justify-between">
-          <p className="text-sm text-[var(--muted)]">
+        <div className="mt-10 flex flex-col items-center gap-4 border-t border-border pt-10 md:flex-row md:justify-between">
+          <p className="text-sm text-muted">
             © {year} Hipkiss Digital. All rights reserved.
           </p>
-          <p className="text-sm text-[var(--muted)]">
+          <p className="text-sm text-muted">
             Web & App Development — Built with care.
           </p>
         </div>
