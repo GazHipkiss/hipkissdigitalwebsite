@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Button } from "../components/Button";
 import { Reveal } from "../components/Reveal";
 
@@ -23,7 +22,7 @@ export default function AboutPage() {
         <div className="container-narrow">
           <Reveal className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
             <div className="flex-shrink-0">
-              <Image
+              <img
                 src="/logo.png"
                 alt="Hipkiss Digital"
                 width={200}

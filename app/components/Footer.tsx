@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 const FOOTER_LINKS = [
   { href: "/services", label: "Services" },
@@ -23,7 +22,7 @@ export function Footer() {
             className="inline-flex items-center transition-opacity duration-200 hover:opacity-90"
             aria-label="Hipkiss Digital – Home"
           >
-            <Image
+            <img
               src="/logo.png"
               alt=""
               width={140}

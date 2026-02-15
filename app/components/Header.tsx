@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 
@@ -60,13 +59,13 @@ export function Header() {
             className="flex items-center gap-3 transition-opacity duration-200 hover:opacity-90 focus:opacity-90"
             aria-label="Hipkiss Digital – Home"
           >
-            <Image
+            <img
               src="/logo.png"
               alt="Hipkiss Digital – Web & App Development"
               width={160}
               height={48}
               className="h-10 w-auto object-contain"
-              priority
+              fetchPriority="high"
             />
           </Link>
 
