@@ -22,10 +22,11 @@ binding = "DB"
 database_name = "hipkiss-digital-db"
 database_id = "6af4ba18-bfbe-4490-ac1c-f7206218931f"
 
-# R2 – create in dashboard or: npx wrangler r2 bucket create hipkiss-uploads
-[[r2_buckets]]
-binding = "BUCKET"
-bucket_name = "hipkiss-uploads"
+# R2 – optional. Enable R2 in Cloudflare Dashboard first, then uncomment and create bucket:
+#   npx wrangler r2 bucket create hipkiss-uploads
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "hipkiss-uploads"
 
 # Env/secrets: set via Cloudflare dashboard or wrangler secret put
 # RESEND_API_KEY, CONTACT_EMAIL, ADMIN_PASSWORD
