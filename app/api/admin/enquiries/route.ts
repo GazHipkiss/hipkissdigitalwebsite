@@ -1,5 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { checkAdminAuth } from "@/lib/auth";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { Enquiry } from "@/lib/types";
 
 export const runtime = "edge";
@@ -7,7 +8,7 @@ export const runtime = "edge";
 export async function GET(request: Request) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
     const { results } = await db
       .prepare("SELECT id, name, email, service, budget, message, created_at FROM enquiries ORDER BY created_at DESC LIMIT 500")
       .all();
-    const enquiries = (results ?? []).map((r) => ({
+    const enquiries = ((results ?? []) as Record<string, unknown>[]).map((r) => ({
       id: r.id,
       name: r.name,
       email: r.email,

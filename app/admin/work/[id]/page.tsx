@@ -17,7 +17,7 @@ export default function AdminWorkEditPage() {
     tags: [],
     cover_image: null,
     gallery_images: [],
-    published: false,
+    published: 0,
   });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(!isNew);
@@ -33,7 +33,7 @@ export default function AdminWorkEditPage() {
         return r.json();
       })
       .then((data) => {
-        if (data) setItem({ ...data, published: data.published === 1 });
+        if (data) setItem({ ...data, published: Number(data.published) ? 1 : 0 });
       })
       .finally(() => setLoading(false));
   }, [id, isNew]);
@@ -54,7 +54,7 @@ export default function AdminWorkEditPage() {
         tags: item.tags ?? [],
         cover_image: item.cover_image ?? null,
         gallery_images: item.gallery_images ?? [],
-        published: item.published ?? false,
+        published: !!(item.published ?? 0),
       }),
     })
       .then((r) => r.json())
@@ -135,7 +135,7 @@ export default function AdminWorkEditPage() {
             type="checkbox"
             id="published"
             checked={!!item.published}
-            onChange={(e) => setItem((p) => ({ ...p, published: e.target.checked }))}
+            onChange={(e) => setItem((p) => ({ ...p, published: e.target.checked ? 1 : 0 }))}
           />
           <label htmlFor="published" className="text-sm text-foreground">Published</label>
         </div>

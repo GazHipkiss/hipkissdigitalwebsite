@@ -1,4 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem } from "@/lib/types";
 
 export const runtime = "edge";
@@ -34,7 +35,7 @@ export async function GET(
   try {
     const { slug } = await params;
     const ctx = getCloudflareContext();
-    const db = (ctx.env as { DB: D1Database }).DB;
+    const db = (ctx.env as CloudflareEnv).DB;
     const { results } = await db
       .prepare("SELECT * FROM work_items WHERE slug = ? AND published = 1")
       .bind(slug)

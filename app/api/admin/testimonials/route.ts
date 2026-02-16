@@ -1,25 +1,26 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { checkAdminAuth } from "@/lib/auth";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { Testimonial, TestimonialInput } from "@/lib/types";
 
 export const runtime = "edge";
 
 function parseTestimonialRow(r: Record<string, unknown>): Testimonial {
   return {
-    id: r.id,
-    name: r.name,
-    role: r.role,
-    company: r.company,
-    quote: r.quote,
-    avatar: r.avatar,
-    created_at: r.created_at,
+    id: r.id as number,
+    name: r.name as string,
+    role: (r.role as string) ?? null,
+    company: (r.company as string) ?? null,
+    quote: r.quote as string,
+    avatar: (r.avatar as string) ?? null,
+    created_at: r.created_at as string,
   };
 }
 
 export async function GET(request: Request) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -38,7 +39,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

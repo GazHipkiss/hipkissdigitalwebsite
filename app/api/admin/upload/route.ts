@@ -1,12 +1,13 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { checkAdminAuth } from "@/lib/auth";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 
 export const runtime = "edge";
 
 export async function POST(request: Request) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; BUCKET?: R2Bucket };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }

@@ -1,4 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem } from "@/lib/types";
 
 export const runtime = "edge";
@@ -30,7 +31,7 @@ function parseRow(r: Record<string, unknown>): WorkItem {
 export async function GET() {
   try {
     const ctx = getCloudflareContext();
-    const db = (ctx.env as { DB: D1Database }).DB;
+    const db = (ctx.env as CloudflareEnv).DB;
     const { results } = await db
       .prepare("SELECT * FROM work_items WHERE published = 1 ORDER BY created_at DESC")
       .all();

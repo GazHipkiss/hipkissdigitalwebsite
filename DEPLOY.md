@@ -52,19 +52,32 @@ For local preview with real bindings, use [.dev.vars](https://developers.cloudfl
 
 ## 4. Build and deploy
 
-Recommended scripts (add to `package.json` if missing):
-
-- `"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"`
-- `"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"`
-- `"cf-typegen": "wrangler types --env-interface CloudflareEnv"`
-
-Then:
+### Deploy from your machine
 
 ```bash
-npm run deploy
+npm run deploy:cf
 ```
 
-Or connect a Git repository to Cloudflare Pages and use the OpenNext build command in the dashboard.
+(or `npm run deploy` – see package.json)
+
+### Deploy from Git (Cloudflare dashboard)
+
+This app is a **full‑stack Next.js** app (APIs, admin, D1). Deploy it as a **Worker**, not as a static **Pages** site.
+
+- **Use Workers, not Pages.** If you created a **Pages** project, the build settings often show a locked “Build output directory” (e.g. `.vercel/output/static`). That preset is for static or Vercel-style builds. OpenNext does **not** use that; it builds into `.open-next` and deploys a Worker. So you need a **Worker** connected to Git, not a Pages project.
+
+**Steps:**
+
+1. In [Workers & Pages](https://dash.cloudflare.com/?to=/:account/workers-and-pages), choose **Create application** → **Worker** (or connect an existing Worker to your repo).
+2. Connect your GitHub/GitLab repo to that **Worker** (not to a Pages project).
+3. In the Worker’s **Settings → Build**:
+   - **Build command:** `npx opennextjs-cloudflare build`
+   - **Deploy command:** `npx opennextjs-cloudflare deploy`
+   - Leave **Root directory** blank unless the app lives in a subfolder.
+   - **Do not set** a “Build output directory” – Workers + OpenNext don’t use that; the deploy command uploads the built Worker from `.open-next`.
+4. Add **Build variables / secrets** if the build needs env vars (e.g. for `next build`). Add **Settings → Variables and secrets** for runtime (e.g. `RESEND_API_KEY`, `CONTACT_EMAIL`, `ADMIN_PASSWORD`). D1/R2 are configured in `wrangler.toml` (bindings).
+
+The Worker name in the dashboard must match the `name` in your `wrangler.toml` (e.g. `hipkissdigitalwebsite`).
 
 ## 5. Resend sender
 

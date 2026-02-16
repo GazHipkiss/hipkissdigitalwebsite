@@ -1,4 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { EnquiryInput } from "@/lib/types";
 
 export const runtime = "edge";
@@ -48,9 +49,10 @@ async function sendResendEmail(params: {
 export async function POST(request: Request) {
   try {
     const ctx = getCloudflareContext();
-    const db = ctx.env.DB;
-    const contactEmail = ctx.env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "";
-    const resendKey = ctx.env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
+    const env = ctx.env as CloudflareEnv;
+    const db = env.DB;
+    const contactEmail = env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "";
+    const resendKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
 
     const raw = await request.json();
     const validated = validateBody(raw);

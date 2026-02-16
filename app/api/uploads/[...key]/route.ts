@@ -1,4 +1,5 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 
 export const runtime = "edge";
 
@@ -10,7 +11,7 @@ export async function GET(
     const key = (await params).key.join("/");
     if (!key) return new Response("Not found", { status: 404 });
     const ctx = getCloudflareContext();
-    const bucket = (ctx.env as { BUCKET?: R2Bucket }).BUCKET;
+    const bucket = (ctx.env as CloudflareEnv).BUCKET;
     if (!bucket) return new Response("Not configured", { status: 503 });
     const object = await bucket.get(key);
     if (!object) return new Response("Not found", { status: 404 });

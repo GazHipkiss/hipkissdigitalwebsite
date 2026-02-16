@@ -1,21 +1,22 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { checkAdminAuth } from "@/lib/auth";
+import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem, WorkItemInput } from "@/lib/types";
 
 export const runtime = "edge";
 
 function parseWorkRow(r: Record<string, unknown>): WorkItem {
   return {
-    id: r.id,
-    title: r.title,
-    slug: r.slug,
-    description: r.description,
+    id: r.id as number,
+    title: r.title as string,
+    slug: r.slug as string,
+    description: r.description as string,
     tags: jsonParse(r.tags, []),
-    cover_image: r.cover_image,
+    cover_image: (r.cover_image as string) ?? null,
     gallery_images: jsonParse(r.gallery_images, []),
-    published: r.published ?? 0,
-    created_at: r.created_at,
-    updated_at: r.updated_at,
+    published: (r.published as number) ?? 0,
+    created_at: r.created_at as string,
+    updated_at: r.updated_at as string,
   };
 }
 
@@ -34,7 +35,7 @@ export async function GET(
 ) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -56,7 +57,7 @@ export async function PUT(
 ) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -93,7 +94,7 @@ export async function DELETE(
 ) {
   try {
     const ctx = getCloudflareContext();
-    const env = ctx.env as { ADMIN_PASSWORD?: string; DB: D1Database };
+    const env = ctx.env as CloudflareEnv;
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
