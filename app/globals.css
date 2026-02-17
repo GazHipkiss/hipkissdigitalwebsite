@@ -302,3 +302,14 @@ body.menu-open {
   outline: 2px solid var(--brand-mid);
   outline-offset: 2px;
 }
+
+/* Policy pages – readable typography */
+.prose-policy {
+  line-height: 1.65;
+}
+.prose-policy a {
+  color: var(--brand-mid);
+}
+.prose-policy a:hover {
+  color: var(--brand-deep);
+}

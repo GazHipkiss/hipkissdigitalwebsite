@@ -28,5 +28,10 @@ database_id = "6af4ba18-bfbe-4490-ac1c-f7206218931f"
 # binding = "BUCKET"
 # bucket_name = "hipkiss-uploads"
 
+# Custom domain – must match Domains & Routes in dashboard; keeps deploys in sync
+[[routes]]
+pattern = "hipkissdigital.com"
+custom_domain = true
+
 # Env/secrets: set via Cloudflare dashboard or wrangler secret put
 # RESEND_API_KEY, CONTACT_EMAIL, ADMIN_PASSWORD
