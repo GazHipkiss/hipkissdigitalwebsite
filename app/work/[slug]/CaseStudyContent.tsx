@@ -89,7 +89,18 @@ export function CaseStudyContent({ slug }: Props) {
               ))}
             </div>
           )}
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap gap-3">
+            {item.project_url && (
+              <a
+                href={item.project_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-mid focus:ring-offset-2"
+              >
+                View live site
+                <span aria-hidden="true">↗</span>
+              </a>
+            )}
             <Button href="/contact">Discuss a similar project</Button>
           </div>
         </Reveal>

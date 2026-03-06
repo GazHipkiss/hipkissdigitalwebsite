@@ -24,6 +24,14 @@ Then run the schema:
 npx wrangler d1 execute hipkiss-digital-db --remote --file=./lib/db/schema.sql
 ```
 
+**Existing DBs:** If you created the DB before `project_url` was added, run the migration:
+
+```bash
+npx wrangler d1 execute hipkiss-digital-db --remote --file=./lib/db/migrations/001_add_project_url.sql
+```
+
+Optional: to add the Restaurant portfolio work item, run `lib/db/seed_restaurant_portfolio.sql` (after the migration).
+
 ## 2. R2 bucket (optional, for uploads)
 
 Create the bucket (or in Cloudflare dashboard):

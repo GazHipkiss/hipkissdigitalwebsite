@@ -18,6 +18,7 @@ export default function AdminWorkEditPage() {
     cover_image: null,
     gallery_images: [],
     published: 0,
+    project_url: null,
   });
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(!isNew);
@@ -55,6 +56,7 @@ export default function AdminWorkEditPage() {
         cover_image: item.cover_image ?? null,
         gallery_images: item.gallery_images ?? [],
         published: !!(item.published ?? 0),
+        project_url: item.project_url ?? null,
       }),
     })
       .then((r) => r.json())
@@ -129,6 +131,17 @@ export default function AdminWorkEditPage() {
             placeholder="/api/uploads/..."
             className="w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-foreground mb-1">Live project URL (optional)</label>
+          <input
+            type="url"
+            value={item.project_url ?? ""}
+            onChange={(e) => setItem((p) => ({ ...p, project_url: e.target.value || null }))}
+            placeholder="https://..."
+            className="w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground"
+          />
+          <p className="mt-1 text-xs text-muted">Link for &quot;View live site&quot; (e.g. Vercel/Netlify demo).</p>
         </div>
         <div className="flex items-center gap-2">
           <input

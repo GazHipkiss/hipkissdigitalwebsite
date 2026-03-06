@@ -15,6 +15,7 @@ function parseWorkRow(r: Record<string, unknown>): WorkItem {
     cover_image: (r.cover_image as string) ?? null,
     gallery_images: jsonParse(r.gallery_images, []),
     published: (r.published as number) ?? 0,
+    project_url: (r.project_url as string) ?? null,
     created_at: r.created_at as string,
     updated_at: r.updated_at as string,
   };
@@ -71,13 +72,14 @@ export async function PUT(
     const cover_image = body?.cover_image ?? null;
     const gallery_images = Array.isArray(body?.gallery_images) ? body.gallery_images : [];
     const published = body?.published === true ? 1 : 0;
+    const project_url = typeof body?.project_url === "string" ? body.project_url.trim() || null : null;
     if (!title) return Response.json({ error: "Title required" }, { status: 400 });
 
     await db
       .prepare(
-        "UPDATE work_items SET title=?, slug=?, description=?, tags=?, cover_image=?, gallery_images=?, published=?, updated_at=datetime('now') WHERE id=?"
+        "UPDATE work_items SET title=?, slug=?, description=?, tags=?, cover_image=?, gallery_images=?, published=?, project_url=?, updated_at=datetime('now') WHERE id=?"
       )
-      .bind(title, slug, description, JSON.stringify(tags), cover_image, JSON.stringify(gallery_images), published, id)
+      .bind(title, slug, description, JSON.stringify(tags), cover_image, JSON.stringify(gallery_images), published, project_url, id)
       .run();
     const { results } = await db.prepare("SELECT * FROM work_items WHERE id = ?").bind(id).all();
     const row = (results ?? [])[0] as Record<string, unknown> | undefined;

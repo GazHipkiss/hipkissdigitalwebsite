@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS work_items (
   cover_image TEXT,
   gallery_images TEXT NOT NULL DEFAULT '[]',
   published INTEGER NOT NULL DEFAULT 0,
+  project_url TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

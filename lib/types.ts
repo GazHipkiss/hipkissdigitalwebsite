@@ -17,6 +17,7 @@ export type WorkItem = {
   cover_image: string | null;
   gallery_images: string[];
   published: number;
+  project_url: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -53,6 +54,7 @@ export type WorkItemInput = {
   cover_image?: string | null;
   gallery_images?: string[];
   published?: boolean;
+  project_url?: string | null;
 };
 
 export type TestimonialInput = {

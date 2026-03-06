@@ -23,6 +23,7 @@ function parseRow(r: Record<string, unknown>): WorkItem {
     cover_image: (r.cover_image as string) ?? null,
     gallery_images: jsonParse(r.gallery_images, []),
     published: (r.published as number) ?? 0,
+    project_url: (r.project_url as string) ?? null,
     created_at: r.created_at as string,
     updated_at: r.updated_at as string,
   };
