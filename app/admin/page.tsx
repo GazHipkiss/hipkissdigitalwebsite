@@ -9,22 +9,30 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     const opts = { credentials: "include" as RequestCredentials };
+    const safeJson = async (r: Response) => {
+      if (!r.ok) return [];
+      try {
+        const data = await r.json();
+        return Array.isArray(data) ? data : [];
+      } catch {
+        return [];
+      }
+    };
     Promise.all([
       fetch("/api/admin/work", opts),
       fetch("/api/admin/testimonials", opts),
       fetch("/api/admin/enquiries", opts),
-    ]).then(([w, t, e]) => {
+    ]).then(async ([w, t, e]) => {
       if (w.status === 401 || t.status === 401 || e.status === 401) {
         window.location.href = "/admin/login?from=" + encodeURIComponent("/admin");
         return;
       }
       setAuthOk(true);
-      Promise.all([w.json(), t.json(), e.json()]).then(([work, testimonials, enquiries]) => {
-        setCounts({
-          work: Array.isArray(work) ? work.length : 0,
-          testimonials: Array.isArray(testimonials) ? testimonials.length : 0,
-          enquiries: Array.isArray(enquiries) ? enquiries.length : 0,
-        });
+      const [work, testimonials, enquiries] = await Promise.all([safeJson(w), safeJson(t), safeJson(e)]);
+      setCounts({
+        work: work.length,
+        testimonials: testimonials.length,
+        enquiries: enquiries.length,
       });
     }).catch(() => setAuthOk(false));
   }, []);

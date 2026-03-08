@@ -38,14 +38,25 @@ export async function GET(request: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     const db = env.DB;
+    if (!db) {
+      return Response.json({ error: "Database not configured" }, { status: 503 });
+    }
     const { results } = await db
       .prepare("SELECT * FROM work_items ORDER BY created_at DESC")
       .all();
-    const items = ((results ?? []) as Record<string, unknown>[]).map(parseWorkRow);
+    const rows = (results ?? []) as Record<string, unknown>[];
+    const items = rows.map((r) => {
+      try {
+        return parseWorkRow(r);
+      } catch (parseErr) {
+        console.error("parseWorkRow error:", parseErr, r);
+        return null;
+      }
+    }).filter((x): x is WorkItem => x !== null);
     return Response.json(items);
   } catch (e) {
     console.error("Admin work list error:", e);
-    return Response.json({ error: "Server error" }, { status: 500 });
+    return Response.json({ error: "Server error", details: String((e as Error).message) }, { status: 500 });
   }
 }
 

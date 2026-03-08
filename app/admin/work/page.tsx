@@ -7,21 +7,38 @@ import type { WorkItem } from "@/lib/types";
 export default function AdminWorkPage() {
   const [list, setList] = useState<WorkItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/admin/work", { credentials: "include" })
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) {
           window.location.href = "/admin/login?from=" + encodeURIComponent("/admin/work");
           return [];
         }
+        if (!r.ok) {
+          const text = await r.text();
+          let msg = `Error ${r.status}`;
+          try {
+            const j = JSON.parse(text);
+            if (j?.error) msg = j.error;
+            if (j?.details) msg += ": " + j.details;
+          } catch {
+            if (text) msg += ": " + text.slice(0, 100);
+          }
+          setError(msg);
+          return [];
+        }
         return r.json();
       })
+      .then((data) => Array.isArray(data) ? data : [])
       .then(setList)
+      .catch(() => setError("Network error"))
       .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <p className="text-muted">Loading…</p>;
+  if (error) return <p className="text-muted">Failed to load: {error}</p>;
 
   return (
     <div>
