@@ -44,11 +44,13 @@ The binding `BUCKET` is already in `wrangler.toml`. If you skip R2, admin image 
 
 ## 3. Secrets / environment
 
-Set these in the Cloudflare dashboard (Workers & Pages → your project → Settings → Variables) or via Wrangler:
+Set these as **runtime** variables (Worker → Settings → Variables and Secrets). They must be available at **runtime**, not only at build time, so the contact API can send email.
 
-- `RESEND_API_KEY` – Resend API key (contact form emails)
+- `RESEND_API_KEY` – Resend API key (contact form emails). If missing, the form still saves to D1 but no email is sent and Resend will show nothing.
 - `CONTACT_EMAIL` – Where contact form submissions are sent (default: support@hipkissdigital.com if unset)
 - `ADMIN_PASSWORD` – Password for `/admin` login
+
+If the form says “Email notification could not be sent”, check Worker logs (Observability → Logs or Tail) for `RESEND_API_KEY not set` and re-add the secret, then redeploy.
 
 ```bash
 npx wrangler secret put RESEND_API_KEY

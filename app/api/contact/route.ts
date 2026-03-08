@@ -63,6 +63,10 @@ export async function POST(request: Request) {
     const contactEmail = env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "support@hipkissdigital.com";
     const resendKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
 
+    if (!resendKey) {
+      console.warn("Contact: RESEND_API_KEY not set in Worker env — email will not be sent. Set it in Cloudflare Worker Settings → Variables and Secrets (runtime).");
+    }
+
     let raw: unknown;
     try {
       raw = await request.json();
@@ -87,6 +91,7 @@ export async function POST(request: Request) {
       return Response.json({ error: "Could not save your message. Try again later." }, { status: 500 });
     }
 
+    let emailSent = false;
     if (resendKey && contactEmail) {
       const subject = `Enquiry from ${name} – Hipkiss Digital`;
       const html = `
@@ -104,13 +109,14 @@ export async function POST(request: Request) {
         html,
         apiKey: resendKey,
       });
-      if (!emailResult.ok) {
-        console.error("Resend failed:", emailResult.error);
-        // Enquiry was saved; still return success so user sees confirmation
+      if (emailResult.ok) {
+        emailSent = true;
+      } else {
+        console.error("Contact Resend failed:", emailResult.error);
       }
     }
 
-    return Response.json({ success: true });
+    return Response.json({ success: true, emailSent });
   } catch (e) {
     console.error("Contact API error:", e);
     return Response.json({ error: "Something went wrong. Please try again." }, { status: 500 });
