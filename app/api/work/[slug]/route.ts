@@ -46,8 +46,8 @@ export async function GET(
   _request: Request,
   { params }: { params: Promise<{ slug: string }> }
 ) {
+  const { slug } = await params;
   try {
-    const { slug } = await params;
     const ctx = getCloudflareContext();
     const db = (ctx.env as CloudflareEnv).DB;
     const { results } = await db
