@@ -2,7 +2,7 @@
 # Build: opennextjs-cloudflare build  (output: .open-next)
 # Deploy: opennextjs-cloudflare deploy  or  upload for Pages
 
-name = "hipkissdigitalwebsite"
+name = "hipkissdigitalwebsite1"
 main = ".open-next/worker.js"
 compatibility_date = "2024-12-30"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
