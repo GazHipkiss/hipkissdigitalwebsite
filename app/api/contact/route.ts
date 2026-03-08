@@ -61,10 +61,14 @@ export async function POST(request: Request) {
     }
 
     const contactEmail = env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "support@hipkissdigital.com";
-    const resendKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
+    // Try process.env first (OpenNext merges Worker env into process.env); then ctx.env
+    const resendKey =
+      (typeof process.env.RESEND_API_KEY === "string" && process.env.RESEND_API_KEY.trim())
+        ? process.env.RESEND_API_KEY
+        : (env as Record<string, unknown>).RESEND_API_KEY as string | undefined;
 
     if (!resendKey) {
-      console.warn("Contact: RESEND_API_KEY not set in Worker env — email will not be sent. Set it in Cloudflare Worker Settings → Variables and Secrets (runtime).");
+      console.warn("Contact: RESEND_API_KEY not set in Worker env — email will not be sent. Set it in Cloudflare Worker Settings → Variables and Secrets (runtime). Try adding as Plain text if Secret does not work.");
     }
 
     let raw: unknown;

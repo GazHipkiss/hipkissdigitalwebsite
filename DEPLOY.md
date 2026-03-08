@@ -54,7 +54,7 @@ The contact form needs `RESEND_API_KEY` at **runtime**. Add it under **Settings*
 - `CONTACT_EMAIL` – Where contact form submissions are sent (default: support@hipkissdigital.com if unset)
 - `ADMIN_PASSWORD` – Password for `/admin` login
 
-If the form says “Email notification could not be sent”, check Worker logs (Observability → Logs or Tail) for `RESEND_API_KEY not set` and re-add the secret, then redeploy.
+If the form says “Email notification could not be sent”, check Worker logs for `RESEND_API_KEY not set`. Try adding RESEND_API_KEY as **Plain text** (not Secret), or set deploy to `npx opennextjs-cloudflare deploy -- --keep-vars`. Redeploy.
 
 ```bash
 npx wrangler secret put RESEND_API_KEY
