@@ -6,7 +6,7 @@ import { safeJson } from "@/lib/safeFetch";
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? "";
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? "xjgakdyw";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
