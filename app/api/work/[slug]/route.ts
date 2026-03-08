@@ -2,6 +2,21 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem } from "@/lib/types";
 
+const RESTAURANT_FALLBACK: WorkItem = {
+  id: 0,
+  title: "The Copper Fox",
+  slug: "restaurant-portfolio",
+  description:
+    "A responsive restaurant portfolio and menu site—seasonal British dining in London. Built with Nuxt, deployed on Vercel.",
+  tags: ["Nuxt", "Vue", "Vercel", "Portfolio"],
+  cover_image: null,
+  gallery_images: [],
+  published: 1,
+  project_url: "https://portfolio-restaurant-nu.vercel.app",
+  created_at: "",
+  updated_at: "",
+};
+
 function jsonParse<T>(s: unknown, fallback: T): T {
   if (typeof s !== "string") return fallback;
   try {
@@ -40,10 +55,12 @@ export async function GET(
       .bind(slug)
       .all();
     const row = (results ?? [])[0] as Record<string, unknown> | undefined;
-    if (!row) return Response.json({ error: "Not found" }, { status: 404 });
-    return Response.json(parseRow(row));
+    if (row) return Response.json(parseRow(row));
+    if (slug === "restaurant-portfolio") return Response.json(RESTAURANT_FALLBACK);
+    return Response.json({ error: "Not found" }, { status: 404 });
   } catch (e) {
     console.error("Work by slug error:", e);
+    if (slug === "restaurant-portfolio") return Response.json(RESTAURANT_FALLBACK);
     return Response.json({ error: "Server error" }, { status: 500 });
   }
 }

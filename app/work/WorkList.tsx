@@ -7,7 +7,20 @@ import { Button } from "../components/Button";
 import { Reveal } from "../components/Reveal";
 import type { WorkItem } from "@/lib/types";
 
-const FALLBACK: WorkItem[] = [];
+const RESTAURANT_PROJECT: WorkItem = {
+  id: 0,
+  title: "The Copper Fox",
+  slug: "restaurant-portfolio",
+  description:
+    "A responsive restaurant portfolio and menu site—seasonal British dining in London. Built with Nuxt, deployed on Vercel.",
+  tags: ["Nuxt", "Vue", "Vercel", "Portfolio"],
+  cover_image: null,
+  gallery_images: [],
+  published: 1,
+  project_url: "https://portfolio-restaurant-nu.vercel.app",
+  created_at: "",
+  updated_at: "",
+};
 
 export function WorkList() {
   const [items, setItems] = useState<WorkItem[] | null>(null);
@@ -15,8 +28,15 @@ export function WorkList() {
   useEffect(() => {
     fetch("/api/work")
       .then(async (r) => safeJson<WorkItem[]>(r))
-      .then((data) => setItems(Array.isArray(data) ? data : FALLBACK))
-      .catch(() => setItems(FALLBACK));
+      .then((data) => {
+        const fromApi = Array.isArray(data) ? data : [];
+        const hasRestaurant = fromApi.some(
+          (p) => p.slug === "restaurant-portfolio" || p.project_url?.includes("portfolio-restaurant-nu")
+        );
+        return hasRestaurant ? fromApi : [RESTAURANT_PROJECT, ...fromApi];
+      })
+      .then(setItems)
+      .catch(() => setItems([RESTAURANT_PROJECT]));
   }, []);
 
   if (items === null) return <p className="text-muted">Loading…</p>;
