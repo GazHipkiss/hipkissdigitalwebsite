@@ -44,7 +44,11 @@ The binding `BUCKET` is already in `wrangler.toml`. If you skip R2, admin image 
 
 ## 3. Secrets / environment
 
-Set these as **runtime** variables (Worker → Settings → Variables and Secrets). They must be available at **runtime**, not only at build time, so the contact API can send email.
+Set these as **runtime** variables. In the dashboard there are two places:
+- **Build** → Variables and secrets: used only **during** the build. Not available when the site handles requests.
+- **Settings** → Variables and Secrets (main Worker settings): used **at runtime** when users hit the site.
+
+The contact form needs `RESEND_API_KEY` at **runtime**. Add it under **Settings** → **Variables and Secrets** (the section that says "used at runtime"). If you only added it under Build, add it again under Settings → Variables and Secrets, then **Redeploy**.
 
 - `RESEND_API_KEY` – Resend API key (contact form emails). If missing, the form still saves to D1 but no email is sent and Resend will show nothing.
 - `CONTACT_EMAIL` – Where contact form submissions are sent (default: support@hipkissdigital.com if unset)
