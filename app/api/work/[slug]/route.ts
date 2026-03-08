@@ -7,9 +7,9 @@ const RESTAURANT_FALLBACK: WorkItem = {
   title: "The Copper Fox",
   slug: "restaurant-portfolio",
   description:
-    "A responsive restaurant portfolio and menu site—seasonal British dining in London. Built with Nuxt, deployed on Vercel.",
-  tags: ["Nuxt", "Vue", "Vercel", "Portfolio"],
-  cover_image: null,
+    "A responsive restaurant site built with vanilla HTML, CSS, and JavaScript to showcase front-end skills—semantic markup, responsive layout, and clean, maintainable code. The Copper Fox theme brings seasonal British dining to the screen.",
+  tags: ["HTML", "CSS", "JavaScript"],
+  cover_image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80",
   gallery_images: [],
   published: 1,
   project_url: "https://portfolio-restaurant-nu.vercel.app",
