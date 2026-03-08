@@ -23,7 +23,7 @@ const RESTAURANT_PROJECT: WorkItem = {
 };
 
 export function WorkList() {
-  const [items, setItems] = useState<WorkItem[] | null>(null);
+  const [items, setItems] = useState<WorkItem[]>([RESTAURANT_PROJECT]);
 
   useEffect(() => {
     fetch("/api/work")
@@ -38,8 +38,6 @@ export function WorkList() {
       .then(setItems)
       .catch(() => setItems([RESTAURANT_PROJECT]));
   }, []);
-
-  if (items === null) return <p className="text-muted">Loading…</p>;
 
   return (
     <>
