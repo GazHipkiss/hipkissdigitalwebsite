@@ -1,8 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { setAdminCookieHeader } from "@/lib/auth";
 
-export const runtime = "edge";
-
 export async function POST(request: Request) {
   try {
     const ctx = getCloudflareContext();

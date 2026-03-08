@@ -2,8 +2,6 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem } from "@/lib/types";
 
-export const runtime = "edge";
-
 function jsonParse<T>(s: unknown, fallback: T): T {
   if (typeof s !== "string") return fallback;
   try {

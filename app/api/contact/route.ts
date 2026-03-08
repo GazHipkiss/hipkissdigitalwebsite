@@ -2,8 +2,6 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { EnquiryInput } from "@/lib/types";
 
-export const runtime = "edge";
-
 function validateBody(body: unknown): { ok: true; data: EnquiryInput } | { ok: false; error: string } {
   if (!body || typeof body !== "object") return { ok: false, error: "Invalid body" };
   const o = body as Record<string, unknown>;

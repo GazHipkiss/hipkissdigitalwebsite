@@ -3,8 +3,6 @@ import { checkAdminAuth } from "@/lib/auth";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { Testimonial, TestimonialInput } from "@/lib/types";
 
-export const runtime = "edge";
-
 function parseTestimonialRow(r: Record<string, unknown>): Testimonial {
   return {
     id: r.id as number,

@@ -2,8 +2,6 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { checkAdminAuth } from "@/lib/auth";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 
-export const runtime = "edge";
-
 export async function POST(request: Request) {
   try {
     const ctx = getCloudflareContext();

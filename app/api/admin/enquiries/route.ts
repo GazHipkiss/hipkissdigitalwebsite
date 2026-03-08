@@ -3,8 +3,6 @@ import { checkAdminAuth } from "@/lib/auth";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { Enquiry } from "@/lib/types";
 
-export const runtime = "edge";
-
 export async function GET(request: Request) {
   try {
     const ctx = getCloudflareContext();

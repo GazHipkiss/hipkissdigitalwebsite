@@ -3,8 +3,6 @@ import { checkAdminAuth } from "@/lib/auth";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { WorkItem, WorkItemInput } from "@/lib/types";
 
-export const runtime = "edge";
-
 function parseWorkRow(r: Record<string, unknown>): WorkItem {
   return {
     id: r.id as number,

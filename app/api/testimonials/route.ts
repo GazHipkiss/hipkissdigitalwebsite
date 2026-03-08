@@ -2,8 +2,6 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import type { CloudflareEnv } from "@/lib/cloudflare";
 import type { Testimonial } from "@/lib/types";
 
-export const runtime = "edge";
-
 function parseRow(r: Record<string, unknown>): Testimonial {
   return {
     id: r.id as number,
