@@ -27,6 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en" style={{ backgroundColor: "#A8D3F0" }}>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(typeof window==="undefined"||!window.fetch)return;var f=window.fetch;window.fetch=function(i,n){return f.call(window,i,n).then(function(r){r.json=function(){return r.text().then(function(t){var s=(t&&t.trim())||"";if(s.charAt(0)!=="["&&s.charAt(0)!=="{")return null;try{return JSON.parse(s)}catch(e){return null}})};return r})}})();`,
+          }}
+        />
         <style
           dangerouslySetInnerHTML={{
             __html: `html,body{background:#A8D3F0!important;color:#1C2E5A!important;min-height:100%;font-family:'Inter',system-ui,sans-serif;}`,
