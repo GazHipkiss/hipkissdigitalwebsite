@@ -34,7 +34,25 @@ export default function AdminWorkEditPage() {
         return r.json();
       })
       .then((data) => {
-        if (data) setItem({ ...data, published: Number(data.published) ? 1 : 0 });
+        if (!data) return;
+        const tags = Array.isArray(data.tags)
+          ? data.tags
+          : typeof data.tags === "string"
+            ? (() => {
+                try {
+                  const parsed = JSON.parse(data.tags);
+                  return Array.isArray(parsed) ? parsed : [];
+                } catch {
+                  return [];
+                }
+              })()
+            : [];
+        setItem({
+          ...data,
+          tags,
+          published: Number(data.published) ? 1 : 0,
+          project_url: data.project_url ?? null,
+        });
       })
       .finally(() => setLoading(false));
   }, [id, isNew]);
@@ -109,18 +127,19 @@ export default function AdminWorkEditPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1">Tags (JSON array)</label>
+          <label className="block text-sm font-medium text-foreground mb-1">Tags</label>
           <input
             type="text"
-            value={JSON.stringify(item.tags ?? [])}
+            value={Array.isArray(item.tags) ? item.tags.join(", ") : ""}
             onChange={(e) => {
-              try {
-                setItem((p) => ({ ...p, tags: JSON.parse(e.target.value || "[]") }));
-              } catch {}
+              const raw = e.target.value.trim();
+              const tags = raw ? raw.split(",").map((t) => t.trim()).filter(Boolean) : [];
+              setItem((p) => ({ ...p, tags }));
             }}
-            placeholder='["Web app", "React"]'
-            className="w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground font-mono text-sm"
+            placeholder="Web app, React, Nuxt"
+            className="w-full rounded-input border border-border bg-surface-panel px-4 py-3 text-foreground"
           />
+          <p className="mt-1 text-xs text-muted">Comma-separated (e.g. Web app, React, Vue)</p>
         </div>
         <div>
           <label className="block text-sm font-medium text-foreground mb-1">Cover image URL</label>
