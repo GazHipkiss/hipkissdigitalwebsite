@@ -129,7 +129,7 @@ export default function AdminWorkEditPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground mb-1">Tags</label>
+          <label className="block text-sm font-medium text-foreground mb-1">Tags (comma-separated)</label>
           <input
             type="text"
             value={Array.isArray(item.tags) ? item.tags.join(", ") : ""}
