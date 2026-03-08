@@ -87,6 +87,13 @@ This app is a **full‑stack Next.js** app (APIs, admin, D1). Deploy it as a **W
 
 The Worker name in the dashboard must match the `name` in your `wrangler.toml` (e.g. `hipkissdigitalwebsite`).
 
+**If "Latest build failed":**
+
+1. Open **Deployments**, click the failed deployment, and read the **build log**.
+2. **Wrong build command:** Build must be `npx opennextjs-cloudflare build` and deploy must be `npx opennextjs-cloudflare deploy`. If you used `npm run build`, the deploy will fail (no `.open-next/worker.js`).
+3. **Node version:** Ensure the build environment uses Node 18+ (e.g. set in Build → Environment or use `engines` in package.json).
+4. Re-run the deployment after fixing the command or env.
+
 ## 5. Resend sender
 
 The contact API sends from `Hipkiss Digital <onboarding@resend.dev>`. To use your own domain, configure the domain in Resend and update the `from` field in `app/api/contact/route.ts`.
