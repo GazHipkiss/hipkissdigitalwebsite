@@ -32,8 +32,14 @@ function jsonParse<T>(s: unknown, fallback: T): T {
 
 export async function GET(request: Request) {
   try {
-    const ctx = getCloudflareContext();
-    const env = ctx.env as CloudflareEnv;
+    let env: CloudflareEnv;
+    try {
+      const ctx = getCloudflareContext();
+      env = (ctx?.env ?? {}) as CloudflareEnv;
+    } catch (ctxErr) {
+      console.error("getCloudflareContext error:", ctxErr);
+      return Response.json({ error: "Server error", details: "Context unavailable" }, { status: 500 });
+    }
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -62,8 +68,14 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const ctx = getCloudflareContext();
-    const env = ctx.env as CloudflareEnv;
+    let env: CloudflareEnv;
+    try {
+      const ctx = getCloudflareContext();
+      env = (ctx?.env ?? {}) as CloudflareEnv;
+    } catch (ctxErr) {
+      console.error("getCloudflareContext error:", ctxErr);
+      return Response.json({ error: "Server error", details: "Context unavailable" }, { status: 500 });
+    }
     if (!checkAdminAuth(request, env.ADMIN_PASSWORD ?? process.env.ADMIN_PASSWORD)) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
