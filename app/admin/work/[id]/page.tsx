@@ -53,7 +53,7 @@ export default function AdminWorkEditPage() {
           ...data,
           tags,
           published: Number(data.published) ? 1 : 0,
-          project_url: data.project_url ?? null,
+          project_url: typeof data.project_url === "string" ? data.project_url : null,
         });
       })
       .finally(() => setLoading(false));
