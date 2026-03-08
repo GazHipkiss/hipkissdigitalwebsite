@@ -47,7 +47,7 @@ The binding `BUCKET` is already in `wrangler.toml`. If you skip R2, admin image 
 Set these in the Cloudflare dashboard (Workers & Pages → your project → Settings → Variables) or via Wrangler:
 
 - `RESEND_API_KEY` – Resend API key (contact form emails)
-- `CONTACT_EMAIL` – Where contact form submissions are sent
+- `CONTACT_EMAIL` – Where contact form submissions are sent (default: support@hipkissdigital.com if unset)
 - `ADMIN_PASSWORD` – Password for `/admin` login
 
 ```bash

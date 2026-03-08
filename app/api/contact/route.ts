@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       return Response.json({ error: "Contact form is temporarily unavailable. Try again later." }, { status: 503 });
     }
 
-    const contactEmail = env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "";
+    const contactEmail = env.CONTACT_EMAIL ?? process.env.CONTACT_EMAIL ?? "support@hipkissdigital.com";
     const resendKey = env.RESEND_API_KEY ?? process.env.RESEND_API_KEY;
 
     let raw: unknown;
