@@ -29,7 +29,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){if(typeof window==="undefined"||!window.fetch)return;var f=window.fetch;window.fetch=function(i,n){return f.call(window,i,n).then(function(r){r.json=function(){return r.text().then(function(t){var s=(t&&t.trim())||"";if(s.charAt(0)!=="["&&s.charAt(0)!=="{")return null;try{return JSON.parse(s)}catch(e){return null}})};return r})}})();`,
+            __html: `(function(){var op=JSON.parse;JSON.parse=function(s,r){try{return op.apply(this,arguments)}catch(e){var t=(typeof s==="string"?s:String(s)).trim();if(t.charAt(0)==="{")return {};return []}};if(typeof window==="undefined"||!window.fetch)return;var f=window.fetch;window.fetch=function(i,n){return f.call(window,i,n).then(function(res){res.json=function(){return res.text().then(function(t){var s=(t&&t.trim())||"";if(s.charAt(0)!=="["&&s.charAt(0)!=="{")return null;try{return op(s)}catch(e){return null}})};return res})}})();`,
           }}
         />
         <style
