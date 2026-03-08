@@ -6,7 +6,7 @@ import { safeJson } from "@/lib/safeFetch";
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [emailSent, setEmailSent] = useState(false);
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID ?? "";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,8 +32,16 @@ export function ContactForm() {
         setErrorMessage(json?.error ?? "Something went wrong");
         return;
       }
+      if (formspreeId) {
+        try {
+          await fetch(`https://formspree.io/f/${formspreeId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(data),
+          });
+        } catch (_) {}
+      }
       setStatus("success");
-      setEmailSent(json?.emailSent ?? false);
       form.reset();
     } catch {
       setStatus("error");
@@ -46,9 +54,6 @@ export function ContactForm() {
       <div className="rounded-card border border-border bg-surface-panel p-8 text-center">
         <p className="text-lg font-medium text-foreground">Thanks for your message.</p>
         <p className="mt-2 text-muted">I’ll get back to you within 24 hours.</p>
-        {!emailSent && (
-          <p className="mt-3 text-sm text-amber-700 dark:text-amber-400">(Email notification could not be sent — your message was still saved.)</p>
-        )}
       </div>
     );
   }

@@ -64,6 +64,21 @@ npx wrangler secret put ADMIN_PASSWORD
 
 For local preview with real bindings, use [.dev.vars](https://developers.cloudflare.com/workers/development-testing/local-development/#local-only-environment-variables).
 
+### Contact form email via Formspree (no Worker secrets)
+
+To get contact form emails working without relying on Worker runtime secrets (e.g. if `RESEND_API_KEY` never reaches the Worker):
+
+1. Sign up at [formspree.io](https://formspree.io) and create a new form.
+2. Set the form’s email to **support@hipkissdigital.com** (or your preferred address) in the Formspree dashboard.
+3. Copy the form ID from the form endpoint (e.g. `https://formspree.io/f/abcxyz` → the ID is `abcxyz`).
+4. In Cloudflare: Worker → **Settings** → **Build** → **Variables and secrets** (build-time). Add:
+   - **Variable name:** `NEXT_PUBLIC_FORMSPREE_FORM_ID`
+   - **Value:** your Formspree form ID (e.g. `abcxyz`)
+   - Type: **Plain text** (build-time vars are inlined into the client bundle).
+5. Save and trigger a new deployment.
+
+The contact form will still save submissions to D1 via `/api/contact` and will also POST to Formspree from the browser, so you receive the email. No yellow warning; no runtime secret required.
+
 ## 4. Build and deploy
 
 ### Deploy from your machine
