@@ -91,7 +91,7 @@ This app is a **full‑stack Next.js** app (APIs, admin, D1). Deploy it as a **W
    - **Do not set** a “Build output directory” – Workers + OpenNext don’t use that; the deploy command uploads the built Worker from `.open-next`.
 4. Add **Build variables / secrets** if the build needs env vars (e.g. for `next build`). Add **Settings → Variables and secrets** for runtime (e.g. `RESEND_API_KEY`, `CONTACT_EMAIL`, `ADMIN_PASSWORD`). D1/R2 are configured in `wrangler.toml` (bindings).
 
-The Worker name in the dashboard must match the `name` in your `wrangler.toml` (e.g. `hipkissdigitalwebsite`).
+The Worker name in the dashboard must match the `name` in your `wrangler.toml`. If you created the Worker as `hipkissdigitalwebsite1`, set `name = "hipkissdigitalwebsite1"` in wrangler.toml so deploys and secrets apply to the same Worker.
 
 **If "Latest build failed":**
 
