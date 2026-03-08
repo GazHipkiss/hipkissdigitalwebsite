@@ -9,9 +9,13 @@ export async function safeJson<T = unknown>(r: Response): Promise<T | null> {
   } catch {
     return null;
   }
-  if (!text.trim()) return null;
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+  // Only attempt parse if body looks like JSON (array or object); avoids "Unexpected identifier" on HTML/plain text
+  const first = trimmed.charAt(0);
+  if (first !== "[" && first !== "{") return null;
   try {
-    return JSON.parse(text) as T;
+    return JSON.parse(trimmed) as T;
   } catch {
     return null;
   }

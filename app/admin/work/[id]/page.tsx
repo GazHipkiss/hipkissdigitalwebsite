@@ -39,7 +39,7 @@ export default function AdminWorkEditPage() {
         if (!data) return;
         const tags = Array.isArray(data.tags)
           ? data.tags
-          : typeof data.tags === "string"
+          : typeof data.tags === "string" && data.tags.trim().startsWith("[")
             ? (() => {
                 try {
                   const parsed = JSON.parse(data.tags);
