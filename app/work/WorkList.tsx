@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 import { Button } from "../components/Button";
 import { Reveal } from "../components/Reveal";
 import type { WorkItem } from "@/lib/types";
@@ -13,7 +14,7 @@ export function WorkList() {
 
   useEffect(() => {
     fetch("/api/work")
-      .then((r) => r.json())
+      .then(async (r) => safeJson<WorkItem[]>(r))
       .then((data) => setItems(Array.isArray(data) ? data : FALLBACK))
       .catch(() => setItems(FALLBACK));
   }, []);

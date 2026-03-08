@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { safeJson } from "@/lib/safeFetch";
 import type { Enquiry } from "@/lib/types";
 
 export default function AdminEnquiriesPage() {
@@ -9,12 +10,14 @@ export default function AdminEnquiriesPage() {
 
   useEffect(() => {
     fetch("/api/admin/enquiries", { credentials: "include" })
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) {
           window.location.href = "/admin/login?from=" + encodeURIComponent("/admin/enquiries");
           return [];
         }
-        return r.json();
+        if (!r.ok) return [];
+        const data = await safeJson<Enquiry[]>(r);
+        return Array.isArray(data) ? data : [];
       })
       .then(setList)
       .finally(() => setLoading(false));

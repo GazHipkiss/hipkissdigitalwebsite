@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { safeJson } from "@/lib/safeFetch";
 import { Reveal } from "./Reveal";
 import type { Testimonial } from "@/lib/types";
 
@@ -10,7 +11,7 @@ export function Testimonials() {
 
   useEffect(() => {
     fetch("/api/testimonials")
-      .then((r) => r.json())
+      .then(async (r) => safeJson<Testimonial[]>(r))
       .then((data) => setItems(Array.isArray(data) ? data : []))
       .catch(() => setItems([]));
   }, []);

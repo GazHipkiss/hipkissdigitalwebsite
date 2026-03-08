@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { safeJson } from "@/lib/safeFetch";
 import { Button } from "../../components/Button";
 import { Reveal } from "../../components/Reveal";
 import type { WorkItem } from "@/lib/types";
@@ -15,12 +16,13 @@ export function CaseStudyContent({ slug }: Props) {
 
   useEffect(() => {
     fetch(`/api/work/${encodeURIComponent(slug)}`)
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 404) {
           setItem("404");
           return null;
         }
-        return r.json();
+        if (!r.ok) return null;
+        return safeJson<WorkItem>(r);
       })
       .then((data) => {
         if (data) setItem(data);

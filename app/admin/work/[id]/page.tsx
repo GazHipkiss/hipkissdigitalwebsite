@@ -3,6 +3,7 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 import type { WorkItem } from "@/lib/types";
 
 export default function AdminWorkEditPage() {
@@ -26,12 +27,13 @@ export default function AdminWorkEditPage() {
   useEffect(() => {
     if (isNew) return;
     fetch(`/api/admin/work/${id}`, { credentials: "include" })
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) {
           window.location.href = "/admin/login?from=" + encodeURIComponent(`/admin/work/${id}`);
           return null;
         }
-        return r.json();
+        if (!r.ok) return null;
+        return safeJson<Record<string, unknown>>(r);
       })
       .then((data) => {
         if (!data) return;
@@ -77,9 +79,9 @@ export default function AdminWorkEditPage() {
         project_url: item.project_url ?? null,
       }),
     })
-      .then((r) => r.json())
+      .then(async (r) => safeJson<{ error?: string }>(r))
       .then((data) => {
-        if (data.error) alert(data.error);
+        if (data?.error) alert(data.error);
         else router.push("/admin/work");
       })
       .finally(() => setSaving(false));

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 import type { Testimonial } from "@/lib/types";
 
 export default function AdminTestimonialsPage() {
@@ -10,12 +11,14 @@ export default function AdminTestimonialsPage() {
 
   useEffect(() => {
     fetch("/api/admin/testimonials", { credentials: "include" })
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) {
           window.location.href = "/admin/login?from=" + encodeURIComponent("/admin/testimonials");
           return [];
         }
-        return r.json();
+        if (!r.ok) return [];
+        const data = await safeJson<Testimonial[]>(r);
+        return Array.isArray(data) ? data : [];
       })
       .then(setList)
       .finally(() => setLoading(false));

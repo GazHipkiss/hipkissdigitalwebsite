@@ -3,6 +3,7 @@
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { safeJson } from "@/lib/safeFetch";
 
 function AdminLoginForm() {
   const router = useRouter();
@@ -21,9 +22,9 @@ function AdminLoginForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
       });
-      const data = await res.json();
+      const data = await safeJson<{ error?: string }>(res);
       if (!res.ok) {
-        setError(data.error ?? "Login failed");
+        setError(data?.error ?? "Login failed");
         return;
       }
       const next = searchParams.get("from") ?? "/admin";

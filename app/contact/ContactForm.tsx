@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { safeJson } from "@/lib/safeFetch";
 
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -24,10 +25,10 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      const json = await res.json();
+      const json = await safeJson<{ error?: string }>(res);
       if (!res.ok) {
         setStatus("error");
-        setErrorMessage(json.error ?? "Something went wrong");
+        setErrorMessage(json?.error ?? "Something went wrong");
         return;
       }
       setStatus("success");

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 import type { WorkItem } from "@/lib/types";
 
 export default function AdminWorkPage() {
@@ -17,21 +18,14 @@ export default function AdminWorkPage() {
           return [];
         }
         if (!r.ok) {
-          const text = await r.text();
-          let msg = `Error ${r.status}`;
-          try {
-            const j = JSON.parse(text);
-            if (j?.error) msg = j.error;
-            if (j?.details) msg += ": " + j.details;
-          } catch {
-            if (text) msg += ": " + text.slice(0, 100);
-          }
+          const j = await safeJson<{ error?: string; details?: string }>(r);
+          const msg = j?.error ? (j.details ? `${j.error}: ${j.details}` : j.error) : `Error ${r.status}`;
           setError(msg);
           return [];
         }
-        return r.json();
+        const data = await safeJson<WorkItem[]>(r);
+        return Array.isArray(data) ? data : [];
       })
-      .then((data) => Array.isArray(data) ? data : [])
       .then(setList)
       .catch(() => setError("Network error"))
       .finally(() => setLoading(false));

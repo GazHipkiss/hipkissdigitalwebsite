@@ -3,6 +3,7 @@
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 import type { Testimonial } from "@/lib/types";
 
 export default function AdminTestimonialEditPage() {
@@ -23,12 +24,13 @@ export default function AdminTestimonialEditPage() {
   useEffect(() => {
     if (isNew) return;
     fetch(`/api/admin/testimonials/${id}`, { credentials: "include" })
-      .then((r) => {
+      .then(async (r) => {
         if (r.status === 401) {
           window.location.href = "/admin/login?from=" + encodeURIComponent(`/admin/testimonials/${id}`);
           return null;
         }
-        return r.json();
+        if (!r.ok) return null;
+        return safeJson<Partial<Testimonial>>(r);
       })
       .then((data) => data && setItem(data))
       .finally(() => setLoading(false));
@@ -51,9 +53,9 @@ export default function AdminTestimonialEditPage() {
         avatar: item.avatar ?? null,
       }),
     })
-      .then((r) => r.json())
+      .then(async (r) => safeJson<{ error?: string }>(r))
       .then((data) => {
-        if (data.error) alert(data.error);
+        if (data?.error) alert(data.error);
         else router.push("/admin/testimonials");
       })
       .finally(() => setSaving(false));

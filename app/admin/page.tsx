@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { safeJson } from "@/lib/safeFetch";
 
 export default function AdminDashboardPage() {
   const [authOk, setAuthOk] = useState<boolean | null>(null);
@@ -9,14 +10,10 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     const opts = { credentials: "include" as RequestCredentials };
-    const safeJson = async (r: Response) => {
+    const toList = async (r: Response) => {
       if (!r.ok) return [];
-      try {
-        const data = await r.json();
-        return Array.isArray(data) ? data : [];
-      } catch {
-        return [];
-      }
+      const data = await safeJson(r);
+      return Array.isArray(data) ? data : [];
     };
     Promise.all([
       fetch("/api/admin/work", opts),
@@ -28,7 +25,7 @@ export default function AdminDashboardPage() {
         return;
       }
       setAuthOk(true);
-      const [work, testimonials, enquiries] = await Promise.all([safeJson(w), safeJson(t), safeJson(e)]);
+      const [work, testimonials, enquiries] = await Promise.all([toList(w), toList(t), toList(e)]);
       setCounts({
         work: work.length,
         testimonials: testimonials.length,
